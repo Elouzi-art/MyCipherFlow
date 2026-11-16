@@ -1,42 +1,42 @@
 # CipherFlow
 
-Application web pédagogique pour composer des chaînes de chiffrement et de transformation de texte, puis visualiser chaque opération étape par étape.
+Educational web application for composing encryption and text transformation chains, then visualizing each operation step by step.
 
 ## Architecture
 
 ```text
 src/
-├── App.tsx                 # état global, orchestration du pipeline et de l’animation
-├── main.tsx                # point d’entrée React
+├── App.tsx                 # global state, pipeline orchestration, and animation
+├── main.tsx                # React entry point
 ├── algorithms/
-│   ├── types.ts            # contrats des algorithmes, traces et recettes
-│   ├── registry.ts         # registre, recettes prédéfinies et exécution du pipeline
-│   └── *.tsx               # algorithmes et visualiseurs (Caesar, Base64, XOR, Reverse)
-└── components/             # interface : pipeline, animations, entrées/sorties, recettes
+│   ├── types.ts            # algorithm contracts, traces, and recipes
+│   ├── registry.ts         # registry, predefined recipes, and pipeline execution
+│   └── *.tsx               # algorithms and visualizers (Caesar, Base64, XOR, Reverse)
+└── components/             # interface: pipeline, animations, inputs/outputs, recipes
 
-public/                     # ressources statiques
-report/                     # rapport et ressources du projet
+public/                     # static resources
+report/                     # project report and resources
 ```
 
-Chaque algorithme expose une fonction `computeTrace` qui produit le résultat et une suite de frames explicatives, ainsi qu’un composant `Visualizer` pour les afficher. `registry.ts` assemble les opérations ; `App.tsx` transmet les traces aux composants d’interface et gère la lecture. Les recettes personnalisées sont conservées dans le `localStorage` du navigateur.
+Each algorithm exposes a `computeTrace` function that produces the result and a sequence of explanatory frames, along with a `Visualizer` component to display them. `registry.ts` assembles the algorithm registry, predefined recipes, and execution flow.
 
-**Flux principal :** saisie → exécution des opérations dans l’ordre → animation des frames de l’étape sélectionnée → affichage du résultat.
+**Main flow:** input → execution of operations in order → animation of the selected step frames → result display.
 
 ## Technologies
 
 React 18 · TypeScript · Vite · Tailwind CSS · Motion
 
-## Démarrage
+## Getting Started
 
-Prérequis : Node.js et npm.
+Prerequisites: Node.js and npm.
 
 ```bash
 npm install
 npm run dev
 ```
 
-La vérification TypeScript et la compilation de production sont disponibles avec `npm run lint` et `npm run build`.
+TypeScript checks and production builds are available with `npm run lint` and `npm run build`.
 
-## Ajouter un algorithme
+## Adding an Algorithm
 
-Créer un module dans `src/algorithms/` qui exporte une définition conforme à `AlgorithmDefinition`, puis l’importer et l’ajouter au tableau `ALGORITHMS` dans `src/algorithms/registry.ts`.
+Create a module in `src/algorithms/` that exports a definition matching `AlgorithmDefinition`, then import it and add it to the `ALGORITHMS` array in `src/algorithms/registry.ts`.
