@@ -1,6 +1,6 @@
 # CipherFlow
 
-Educational web application for composing encryption and text transformation chains, then visualizing each operation step by step.
+An educational web application for building chains of encryption and text transformation operations, then visualizing each operation step by step.
 
 ## Architecture
 
@@ -9,18 +9,18 @@ src/
 ├── App.tsx                 # global state, pipeline orchestration, and animation
 ├── main.tsx                # React entry point
 ├── algorithms/
-│   ├── types.ts            # algorithm contracts, traces, and recipes
+│   ├── types.ts            # algorithm, trace, and recipe contracts
 │   ├── registry.ts         # registry, predefined recipes, and pipeline execution
 │   └── *.tsx               # algorithms and visualizers (Caesar, Base64, XOR, Reverse)
-└── components/             # interface: pipeline, animations, inputs/outputs, recipes
+└── components/             # interface: pipeline, animations, inputs/outputs, and recipes
 
-public/                     # static resources
+public/                     # static assets
 report/                     # project report and resources
 ```
 
-Each algorithm exposes a `computeTrace` function that produces the result and a sequence of explanatory frames, along with a `Visualizer` component to display them. `registry.ts` assembles the algorithm registry, predefined recipes, and execution flow.
+Each algorithm exposes a `computeTrace` function that returns the result and a sequence of explanatory frames, as well as a `Visualizer` component to display them. `registry.ts` brings together the algorithms, predefined recipes, and pipeline execution.
 
-**Main flow:** input → execution of operations in order → animation of the selected step frames → result display.
+**Main flow:** enter text → run the operations in order → animate the frames for the selected step → display the result.
 
 ## Technologies
 
@@ -35,8 +35,8 @@ npm install
 npm run dev
 ```
 
-TypeScript checks and production builds are available with `npm run lint` and `npm run build`.
+Run TypeScript checks and create a production build with `npm run lint` and `npm run build`.
 
 ## Adding an Algorithm
 
-Create a module in `src/algorithms/` that exports a definition matching `AlgorithmDefinition`, then import it and add it to the `ALGORITHMS` array in `src/algorithms/registry.ts`.
+Create a module in `src/algorithms/` that exports a definition conforming to `AlgorithmDefinition`, then import it and add it to the `ALGORITHMS` array in `src/algorithms/registry.ts`.
