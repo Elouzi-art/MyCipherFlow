@@ -1,0 +1,17 @@
+node_modules/
+build/
+dist/
+coverage/
+.DS_Store
+*.log
+.env*
+!.env.example
+
+# LaTeX build artifacts
+report/*.aux
+report/*.toc
+report/*.out
+report/*.log
+report/*.fls
+report/*.fdb_latexmk
+report/*.synctex.gz

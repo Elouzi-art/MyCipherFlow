@@ -1,0 +1,284 @@
+% ===== CipherFlow Progress Report =====
+\documentclass[a4paper,12pt]{report}
+
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\usepackage{geometry}
+\geometry{left=2.5cm,right=2.5cm,top=2cm,bottom=3.5cm}
+
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage{wallpaper}
+
+\usepackage{booktabs}
+\usepackage[table]{xcolor}
+\usepackage{colortbl}
+
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\definecolor{FSTblue}{RGB}{0,102,204}
+\definecolor{codebg}{RGB}{245,245,245}
+\definecolor{codeframe}{RGB}{200,200,200}
+
+\lstdefinelanguage{Kotlin}{
+  sensitive=true,
+  keywords={fun, val, var, when, do, while, if, else, for, in, return,
+            true, false, null, class, data, object, companion, override,
+            import, package, is, as, by, typealias, this, super, init,
+            constructor, abstract, open, sealed, interface, enum, break,
+            continue, throw, try, catch, finally, it},
+  morestring=[b]",
+  morestring=[b]',
+  morecomment=[l]{//},
+  morecomment=[s]{/*}{*/},
+}
+
+\lstdefinestyle{CodeStyle}{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{codebg},
+  frame=single,
+  rulecolor=\color{codeframe},
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{FSTblue}\bfseries,
+  stringstyle=\color{teal},
+  commentstyle=\color{gray}\itshape,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  numbersep=5pt,
+  xleftmargin=10pt,
+}
+
+\frenchbsetup{StandardLists=true}
+
+\newcommand{\question}[1]{\section*{#1}\addcontentsline{toc}{section}{#1}}
+
+\newcommand{\screenshot}[3][0.75]{%
+  \IfFileExists{./imgs/#2}{%
+    \begin{figure}[H]\centering
+      \includegraphics[width=#1\textwidth]{./imgs/#2}
+      \caption{#3}
+    \end{figure}}{%
+    \begin{figure}[H]\centering
+      \fbox{\parbox[c][5cm][c]{#1\textwidth}{\centering
+        \textbf{CAPTURE A INSERER}\\[1ex]\texttt{imgs/\detokenize{#2}}}}
+      \caption{#3}
+    \end{figure}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom Title Page Setup  %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand*{\makeCustomTitle}{
+    \newgeometry{margin=2.5cm}
+    \begin{titlepage}
+        \ThisLRCornerWallPaper{1.2}{./background.jpg}
+        \setlength{\parindent}{0pt}
+
+        \begin{minipage}[t][0.25\textheight]{\textwidth}
+            \begin{center}
+                \includegraphics[height=0.15\textheight]{./LOGO_FSTM.png}
+            \end{center}
+            \vspace{2ex}
+            \begin{center}
+                {
+                    \scshape
+                    {\LARGE Universit\'{e} Cadi Ayyad\\}
+                    {\Large Facult\'{e} des Sciences et Techniques de Marrakech\\[1ex]}
+                    {\large D\'{e}partement d'Informatique}
+                }
+            \end{center}
+        \end{minipage}
+
+        \begin{minipage}{\textwidth}
+            \vspace{0.15\textheight}
+            \begin{center}
+                {\bfseries\huge Rapport d'Avancement --- CipherFlow}
+            \end{center}
+            \vspace{3ex}
+        \end{minipage}
+
+        \begin{center}
+            {\Large Module : Developpement Frontend}
+
+            \vfill
+
+            \begin{tabular}{@{}p{0.49\textwidth}@{\hspace{0.02\textwidth}}p{0.49\textwidth}@{}}
+                \begin{minipage}[t]{0.49\textwidth}
+                    \large
+                    \textbf{\'{E}tudiants}\\
+                    Mohamed \textsc{EL BOUCHIR}\\
+                    Bilal \textsc{AKENSOUSS}\\
+                    Mohammed \textsc{ALHAYANE}\\
+                    Salam \textsc{ELOUZI}
+                \end{minipage}
+            \end{tabular}
+
+            \vfill
+
+            {\large\today}
+        \end{center}
+    \end{titlepage}
+    \restoregeometry
+}
+
+\begin{document}
+
+\makeCustomTitle
+
+\tableofcontents
+\newpage
+
+\chapter*{CipherFlow --- Tableau de Bord Anime de Transformation de Donnees}
+\addcontentsline{toc}{chapter}{CipherFlow --- Tableau de Bord Anime de Transformation de Donnees}
+
+CipherFlow est une application web de visualisation d'algorithmes cryptographiques
+et de transformation de donnees, inspiree de CyberChef. L'objectif principal est
+de rendre la composition de pipelines d'operations interactive et educative
+grace a des animations pas-a-pas declaratives. Ce rapport decrit la mise en place
+de l'interface initiale et du systeme d'extension que chaque membre utilisera pour
+ajouter ses propres operations.
+
+\question{Presentation du projet et contexte}
+
+CipherFlow se positionne comme une alternative animee a CyberChef. La difference
+fondamentale est la suivante : chaque operation du pipeline possede un composant
+\texttt{Visualizer} qui rend, image par image, ce qui se passe a l'interieur de
+l'algorithme. L'utilisateur peut ainsi voir, lettre par lettre ou octet par octet,
+comment son texte est transforme.
+
+Les technologies utilisees sont :
+
+\begin{itemize}
+  \item \textbf{React 18 + TypeScript} --- composants fonctionnels et typage strict.
+  \item \textbf{Vite} --- serveur de developpement et bundle de production.
+  \item \textbf{Framer Motion (motion/react)} --- animations declaratives fluides.
+  \item \textbf{Tailwind CSS} --- mise en page utilitaire sans CSS personnalise.
+  \item \textbf{Lucide React} --- icones SVG.
+\end{itemize}
+
+\screenshot[0.95]{screenshot1.png}{Interface initiale de CipherFlow au demarrage}
+
+\question{Architecture de l'interface initiale}
+
+L'interface principale est composee de cinq blocs empiles verticalement :
+
+\begin{enumerate}
+  \item \textbf{TopBar} --- navigation entre la vue Workbench et la vue Presets,
+        bouton Play global.
+  \item \textbf{InputPanel} --- zone de saisie du texte d'entree.
+  \item \textbf{RecipePipeline} --- pipeline glisser-deposer des operations,
+        avec controles de parametres par etape (activer/desactiver, deplacer,
+        supprimer), bouton d'ajout, mode dechiffrement, inversion d'ordre,
+        sauvegarde de recette.
+  \item \textbf{AnimationStage} --- scene d'animation : barre de navigation
+        entre etapes, lecteur image par image avec vitesse reglable (0.5x, 1x, 2x),
+        rendu du composant \texttt{Visualizer} propre a chaque algorithme.
+  \item \textbf{OutputPanel} --- affichage de la sortie finale et de la sortie
+        partielle de l'etape active, bouton \og Utiliser comme entree \fg{}.
+\end{enumerate}
+
+\screenshot[0.95]{screenshot2.png}{Pipeline avec une operation Caesar active et son animation}
+
+\question{Systeme d'extension : comment ajouter une operation}
+
+Toute la logique de decouverte des algorithmes repose sur un registre central :
+\texttt{src/algorithms/registry.ts}. Ajouter une nouvelle operation se fait en
+trois etapes sans modifier aucun autre fichier existant :
+
+\begin{enumerate}
+  \item Creer un fichier \texttt{src/algorithms/monOperation.tsx} exportant un
+        objet de type \texttt{AlgorithmDefinition}.
+  \item L'importer dans \texttt{registry.ts} et l'ajouter au tableau
+        \texttt{ALGORITHMS}.
+  \item Le composant \texttt{Visualizer} inclu dans la definition est
+        automatiquement utilise par \texttt{AnimationStage} pour afficher
+        l'animation.
+\end{enumerate}
+
+L'interface \texttt{AlgorithmDefinition} impose les champs suivants :
+
+\begin{lstlisting}[style=CodeStyle, language={[Sharp]C}, caption={Interface AlgorithmDefinition (TypeScript)}]
+export interface AlgorithmDefinition<TState = any> {
+  id: string;             // identifiant unique, ex: 'caesar-cipher'
+  name: string;           // libelle affiche dans l'UI
+  category: AlgorithmCategory;  // 'Cipher' | 'Encoding' | 'Bitwise' | 'Text'
+  summary: string;        // description courte
+  animationPattern: string;     // tag du style d'animation
+  complexity: string;     // ex: 'O(n)'
+  paramSchema: ParamField[];    // schema des parametres configurables
+  defaultParams: Record<string, any>;
+  computeTrace: (input: string, params: Record<string, any>)
+    => AlgorithmTrace<TState>;  // logique de calcul + frames
+  invertParams?: (params: Record<string, any>) => Record<string, any>;
+  Visualizer: ComponentType<VisualizerProps<TState>>;  // composant React
+}
+\end{lstlisting}
+
+La fonction \texttt{computeTrace} est la cle du systeme : elle prend le texte
+d'entree et les parametres, et retourne un objet \texttt{AlgorithmTrace}
+contenant un tableau de \texttt{AnimationFrame}. Chaque frame decrit l'etat
+intermediaire de la transformation (texte produit jusqu'ici, titre de l'etape,
+explication, et un objet \texttt{state} specifique a l'algorithme pour le
+\texttt{Visualizer}).
+
+\question{Operations implementees dans la version initiale}
+
+Quatre operations ont ete implementees pour servir de base et de modeles
+pour les membres de l'equipe :
+
+\begin{itemize}
+  \item \textbf{Caesar Cipher} (\texttt{caesar.tsx}) --- decalage de chaque
+        caractere dans l'alphabet. Animation : mise en surbrillance lettre par
+        lettre avec affichage du decalage.
+  \item \textbf{Base64 Encode/Decode} (\texttt{base64.tsx}) --- encodage Base64
+        standard. Animation : groupement des caracteres par blocs de 3 puis
+        conversion en 4 caracteres Base64.
+  \item \textbf{XOR Cipher} (\texttt{xor.tsx}) --- XOR octet par octet avec
+        une cle textuelle. Animation : affichage des valeurs binaires de l'entree,
+        de la cle et du resultat XOR.
+  \item \textbf{Reverse Text} (\texttt{reverse.tsx}) --- inversion de la chaine
+        avec option de permutation de casse. Animation : deplacement visuel des
+        caracteres vers leurs positions finales.
+\end{itemize}
+
+\screenshot[0.95]{screenshot3.png}{Pipeline multi-etapes avec sortie finale visible}
+
+\question{Repartition du travail et prochaines etapes}
+
+La base commune (interface, registre, composants UI, animations generiques) a
+ete construite collectivement. Chaque membre de l'equipe prendra en charge
+l'implementation d'au moins une operation supplementaire en suivant le contrat
+\texttt{AlgorithmDefinition} :
+
+\begin{itemize}
+  \item \textbf{Mohamed El Bouchir} --- operation et \texttt{Visualizer}
+        personnalises (a definir).
+  \item \textbf{Bilal Akensouss} --- operation et \texttt{Visualizer}
+        personnalises (a definir).
+  \item \textbf{Mohammed Alhayane} --- operation et \texttt{Visualizer}
+        personnalises (a definir).
+  \item \textbf{Salam Elouzi} --- operation et \texttt{Visualizer}
+        personnalises (a definir).
+\end{itemize}
+
+Chaque membre est libre de choisir le style visuel de son \texttt{Visualizer}
+(transition par fondu, deplacement, retournement de carte, effet de pulsation,
+etc.) du moment que la logique de \texttt{computeTrace} reste pure et testable.
+
+\bigskip
+
+Ce rapport constitue le premier jalon du projet. La prochaine etape sera la
+presentation de chaque operation avec son animation lors de la seance suivante.
+
+\end{document}

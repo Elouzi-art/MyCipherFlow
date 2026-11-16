@@ -1,0 +1,6 @@
+{
+  "name": "CipherFlow",
+  "description": "An animated, extensible cryptography and data-encoding pipeline workbench that visualizes every algorithmic step in real time.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
