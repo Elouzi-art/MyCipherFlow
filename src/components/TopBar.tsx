@@ -48,7 +48,7 @@ export function TopBar({
         </button>
         <button
           type="button"
-          onClick={() => onSelectView('presets')
+          onClick={() => onSelectView('presets')}
           className={`whitespace-nowrap shrink-0 transition-colors hover:text-slate-900 ${
             activeView === 'presets' ? 'text-slate-900 underline decoration-sky-600 decoration-2 underline-offset-8' : ''
           }`}
