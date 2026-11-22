@@ -1,4 +1,5 @@
 import {useState} from 'react';
+import 'bootstrap/dist/css/bootstrap-grid.min.css';
 import {ArrowRight, BookOpen, CheckCircle2, ChevronDown, Code2, Film, Layers3, Play, Workflow} from 'lucide-react';
 import './guide.css';
 
