@@ -1,8 +1,8 @@
 import {Pause, Play} from 'lucide-react';
 
 interface TopBarProps {
-  activeView: 'workbench' | 'presets';
-  onSelectView: (view: 'workbench' | 'presets') => void;
+  activeView: 'workbench' | 'presets' | 'guide';
+  onSelectView: (view: 'workbench' | 'presets' | 'guide') => void;
   isPlaying: boolean;
   canPlay: boolean;
   onTogglePlay: () => void;
@@ -39,7 +39,16 @@ export function TopBar({
         </button>
         <button
           type="button"
-          onClick={() => onSelectView('presets')}
+          onClick={() => onSelectView('guide')}
+          className={`whitespace-nowrap shrink-0 transition-colors hover:text-slate-900 ${
+            activeView === 'guide' ? 'text-slate-900 underline decoration-sky-600 decoration-2 underline-offset-8' : ''
+          }`}
+        >
+          Guide
+        </button>
+        <button
+          type="button"
+          onClick={() => onSelectView('presets')
           className={`whitespace-nowrap shrink-0 transition-colors hover:text-slate-900 ${
             activeView === 'presets' ? 'text-slate-900 underline decoration-sky-600 decoration-2 underline-offset-8' : ''
           }`}
