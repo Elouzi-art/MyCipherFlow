@@ -1,42 +1,38 @@
-# CipherFlow
+# CipherFlow — Animated Algorithm Pipeline Workbench
 
-An educational web application for building chains of encryption and text transformation operations, then visualizing each operation step by step.
+CipherFlow is an educational web application for data transformation and cryptography, inspired by CyberChef.
+
+Unlike tools that perform transformations instantly, CipherFlow makes the execution process visible through step-by-step animations. Users can chain operations into custom recipes, inspect intermediate data states, adjust parameters, and follow transformations character by character or byte by byte.
+
+## Key Features
+
+- **Interactive Pipeline Builder:** Chain multiple operations into a recipe and manage the execution order.
+- **Step-by-Step Animation:** Inspect transformations frame by frame using playback controls.
+- **Plug-and-Play Architecture:** Add algorithms through a shared TypeScript contract without rewriting the core interface.
+- **Live I/O Panel:** Enter input data and inspect the resulting output.
+- **Preset Management:** Load predefined recipes and save custom pipeline configurations.
+
+## Current Built-in Operations
+
+| Operation | Category | Description | Animation |
+|---|---|---|---|
+| **Caesar Cipher** | Cipher | Shifts letters along the alphabet using a configurable key | Alphabet wheel and letter-by-letter tracking |
+| **Base64 Encode/Decode** | Encoding | Converts text to and from Base64 representation | 3-byte to 4-character block mapping |
+| **XOR Cipher** | Bitwise | Applies bitwise XOR between input bytes and a key | Binary comparison and bit-flip visualization |
+| **Reverse Text** | Text | Reverses the order of characters | Positional character displacement |
 
 ## Architecture
 
 ```text
 src/
-├── App.tsx                 # global state, pipeline orchestration, and animation
+├── App.tsx                 # Global state, pipeline orchestration, and animation
 ├── main.tsx                # React entry point
 ├── algorithms/
-│   ├── types.ts            # algorithm, trace, and recipe contracts
-│   ├── registry.ts         # registry, predefined recipes, and pipeline execution
-│   └── *.tsx               # algorithms and visualizers (Caesar, Base64, XOR, Reverse)
-└── components/             # interface: pipeline, animations, inputs/outputs, and recipes
+│   ├── types.ts            # Algorithm, trace, and recipe contracts
+│   ├── registry.ts         # Algorithm registry and pipeline execution
+│   └── *.tsx               # Algorithm implementations and visualizers
+└── components/
+    └── ...                 # Pipeline, animations, I/O panels, and recipes
 
-public/                     # static assets
-report/                     # project report and resources
-```
-
-Each algorithm exposes a `computeTrace` function that returns the result and a sequence of explanatory frames, as well as a `Visualizer` component to display them. `registry.ts` brings together the algorithms, predefined recipes, and pipeline execution.
-
-**Main flow:** enter text → run the operations in order → animate the frames for the selected step → display the result.
-
-## Technologies
-
-React 18 · TypeScript · Vite · Tailwind CSS · Motion
-
-## Getting Started
-
-Prerequisites: Node.js and npm.
-
-```bash
-npm install
-npm run dev
-```
-
-Run TypeScript checks and create a production build with `npm run lint` and `npm run build`.
-
-## Adding an Algorithm
-
-Create a module in `src/algorithms/` that exports a definition conforming to `AlgorithmDefinition`, then import it and add it to the `ALGORITHMS` array in `src/algorithms/registry.ts`.
+public/                     # Static assets
+report/                     # Project report and resources
